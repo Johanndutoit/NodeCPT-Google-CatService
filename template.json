@@ -1,0 +1,37 @@
+{ "template": {
+    "action": {
+
+      "commands": [
+
+        "apt-get update",
+        "apt-get -y install nodejs nodejs-legacy nginx unzip",
+        "curl https://www.npmjs.org/install.sh | sudo sh",
+        "sudo npm install -g supervisor",
+        "wget https://github.com/Johanndutoit/NodeCPT-Google-CatService/archive/master.zip",
+        "tar -xf master.zip",
+        "supervisor -- NodeCPT-Google-CatService-master/index.js",
+        "cat NodeCPT-Google-CatService-master/nginx.conf > /etc/nginx/cat.conf",
+        "/etc/init.d/nginx restart"
+
+      ]
+
+    },
+    "vmParams": {
+      "machineType": "f1-micro",
+      "disksToCreate": [{
+        "boot": "true",
+        "initializeParams": {
+          "sourceImage": "https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/backports-debian-7-wheezy-v20140718",
+          "diskSizeGb": "100"
+         }
+       }],
+     "networkInterfaces": [{
+       "network": "default",
+       "accessConfigs": [{
+         "type": "ONE_TO_ONE_NAT",
+         "name": "External NAT"
+       }]
+     }]
+   }
+  }
+}
